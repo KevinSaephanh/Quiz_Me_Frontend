@@ -1,0 +1,28 @@
+.navbar {
+    min-height: 70px !important;
+}
+
+.navbar-brand,
+.nav-link {
+    color: white !important;
+    font-weight: bold;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+    color: skyblue !important;
+    transition: 0.3s all ease-in;
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+.navbar-toggler {
+    border: 2px solid white !important;
+}
+
+.navbar-toggler:hover {
+    border-color: skyblue !important;
+    transition: 0.3s all ease-in;
+}

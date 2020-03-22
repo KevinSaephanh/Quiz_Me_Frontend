@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import {
     LOGIN_SUCCESS,
     REGISTER_SUCCESS,
@@ -6,6 +7,7 @@ import {
     LOAD_USER,
     AUTH_ERROR
 } from "./types";
+import setAuthToken from "../../utils/AuthToken";
 
 export const register = user => async dispatch => {
     try {
@@ -26,16 +28,17 @@ export const register = user => async dispatch => {
 export const login = user => async dispatch => {
     try {
         const res = await axios.post("/api/token-auth/", user);
-        const token = res.data;
-        const auth = {
-            username: user.username,
-            token,
-            expirationDate: new Date(new Date().getTime() + 3600 * 1000)
-        };
 
-        return dispatch({
+        // Create and set token in header and localStorage
+        const { token } = res.data;
+        localStorage.setItem("token", token);
+        setAuthToken(token);
+
+        // Decode token to get user data
+        const decoded = jwtDecode(token);
+        dispatch({
             type: LOGIN_SUCCESS,
-            payload: auth
+            payload: decoded
         });
     } catch (err) {
         return dispatch({
@@ -47,17 +50,17 @@ export const login = user => async dispatch => {
 
 export const loadUser = () => async dispatch => {
     try {
-        // Parse user data from local storage
-        const user = JSON.parse(localStorage.auth);
+        const token = JSON.parse(localStorage.token);
 
         // Reset auth state if local storage does not contain user
-        if (!user) {
+        if (!token) {
             return dispatch({
                 type: LOGOUT
             });
         } else {
             // Check if token expired
-            const expirationDate = new Date(user.expirationDate);
+            const decoded = jwtDecode(token);
+            const expirationDate = new Date(decoded.exp);
             if (expirationDate <= new Date()) {
                 return dispatch({
                     type: LOGOUT
@@ -66,7 +69,7 @@ export const loadUser = () => async dispatch => {
                 // Set state with user data
                 return dispatch({
                     type: LOAD_USER,
-                    payload: user
+                    payload: decoded
                 });
             }
         }
@@ -79,6 +82,10 @@ export const loadUser = () => async dispatch => {
 };
 
 export const logout = () => dispatch => {
+    // Remove token from localStorage and header
+    localStorage.removeItem("token");
+    setAuthToken(false);
+
     return dispatch({
         type: LOGOUT
     });

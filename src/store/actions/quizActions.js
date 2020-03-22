@@ -8,9 +8,9 @@ import {
     QUIZ_ERROR
 } from "./types";
 
-export const getQuizzes = () => async dispatch => {
+export const getQuizzes = page => async dispatch => {
     try {
-        const res = await axios.get("/api/quizzes/");
+        const res = await axios.get(`/api/quizzes/page=${page}/`);
         return dispatch({
             type: GET_QUIZZES,
             payload: res.data
