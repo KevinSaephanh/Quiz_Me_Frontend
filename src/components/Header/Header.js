@@ -68,10 +68,7 @@ const Header = props => {
                 </Navbar.Collapse>
             </Navbar>
             <LoginModal show={showLogin} close={handleCloseLogin} />
-            <SignupModal
-                modalOpen={showSignup}
-                handleModalOpen={handleCloseSignup}
-            />
+            <SignupModal show={showSignup} close={handleCloseSignup} />
         </div>
     );
 };

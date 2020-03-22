@@ -10,8 +10,8 @@ const LoginModal = props => {
         username: "",
         password: ""
     });
-    const { username, password } = inputs;
     const [errors, setErrors] = useState([]);
+    const { username, password } = inputs;
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -57,11 +57,6 @@ const LoginModal = props => {
                             placeholder="Enter password"
                         />
                     </Form.Group>
-                    {errors && (
-                        <Alert variant="warning">
-                            Username and/or Password is incorrect!
-                        </Alert>
-                    )}
                 </Form>
             </Modal.Body>
             <Modal.Footer>

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Form, InputGroup, Button, Alert } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Alert, Modal } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { register } from "../../store/actions/authActions";
@@ -7,7 +7,91 @@ import { register } from "../../store/actions/authActions";
 import PropTypes from "prop-types";
 
 const SignupModal = props => {
-    return <div>HELLO</div>;
+    const [inputs, setInputs] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+    const [errors, setErrors] = useState([]);
+    const { username, email, password, confirmPassword } = inputs;
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setInputs(inputs => ({ ...inputs, [name]: value }));
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        if (confirmPassword !== password) {
+            return;
+        }
+    };
+
+    return (
+        <Modal
+            show={props.show}
+            onHide={props.close}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Signup
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="username"
+                            value={username}
+                            onChange={handleChange}
+                            placeholder="Enter username"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={handleChange}
+                            placeholder="Enter email"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={handleChange}
+                            placeholder="Enter password"
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={handleChange}
+                            placeholder="Enter password again"
+                        />
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button>Submit</Button>
+                <Button onClick={props.close}>Cancel</Button>
+            </Modal.Footer>
+        </Modal>
+    );
 };
 
 SignupModal.propTypes = {
