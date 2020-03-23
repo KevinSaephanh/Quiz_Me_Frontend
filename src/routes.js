@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import Home from "./containers/Home";
+import Home from "./containers/Home/Home";
 import CreateQuiz from "./containers/CreateQuiz";
 import QuizDetail from "./containers/QuizDetail";
 import ErrorPage from "./containers/ErrorPage";

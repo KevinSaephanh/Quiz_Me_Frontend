@@ -7,10 +7,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const App = () => {
+    const loadUser = () => {
+        if (localStorage.token) return true;
+        return false;
+    };
+
     return (
         <Container fluid>
-            <Header />
-            <Routes />
+            <Header isAuthenticated={loadUser} />
+            <div id="content">
+                <Routes />
+            </div>
             <Footer />
         </Container>
     );

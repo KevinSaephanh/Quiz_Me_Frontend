@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
-
 import { connect } from "react-redux";
 import { register } from "../../store/actions/authActions";
-
 import PropTypes from "prop-types";
+import "./Auth.css";
 
 const SignupModal = props => {
     const [inputs, setInputs] = useState({
@@ -87,7 +86,7 @@ const SignupModal = props => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button>Submit</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
                 <Button onClick={props.close}>Cancel</Button>
             </Modal.Footer>
         </Modal>

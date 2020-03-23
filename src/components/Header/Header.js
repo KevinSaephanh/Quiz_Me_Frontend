@@ -22,41 +22,36 @@ const Header = props => {
         props.history.push("/");
     };
 
-    const renderAuthNavs = () => {
-        if (props.isAuthenticated) {
-            return <Nav.Link onClick={logoutUser}>Logout</Nav.Link>;
-        }
-        return (
-            <div>
-                <Nav.Link href="/login">Login</Nav.Link>
-                <Nav.Link href="/signup">Signup</Nav.Link>
-            </div>
-        );
-    };
-
     return (
         <div>
             <Navbar expand="lg" bg="dark">
                 <Navbar.Brand href="/">QuizMe</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/create">Create</Nav.Link>
-                        <Nav.Link
-                            href="#"
-                            name="loginModal"
-                            onClick={handleShowLogin}
-                        >
-                            Login
-                        </Nav.Link>
-                        <Nav.Link
-                            href="#"
-                            name="signupModal"
-                            onClick={handleShowSignup}
-                        >
-                            Signup
-                        </Nav.Link>{" "}
-                    </Nav>
+                    {props.isAuthenticated === true ? (
+                        <Nav className="mr-auto">
+                            <Nav.Link href="/create">Create</Nav.Link>
+                            <Nav.Link href="/">Profile</Nav.Link>
+                            <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
+                        </Nav>
+                    ) : (
+                        <Nav className="mr-auto">
+                            <Nav.Link
+                                href="#"
+                                name="loginModal"
+                                onClick={handleShowLogin}
+                            >
+                                Login
+                            </Nav.Link>
+                            <Nav.Link
+                                href="#"
+                                name="signupModal"
+                                onClick={handleShowSignup}
+                            >
+                                Signup
+                            </Nav.Link>
+                        </Nav>
+                    )}
                     <Form inline className="search-form">
                         <FormControl
                             type="text"

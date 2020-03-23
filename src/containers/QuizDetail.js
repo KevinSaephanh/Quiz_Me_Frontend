@@ -51,7 +51,6 @@ class QuizDetail extends Component {
                 <h2 style={{ fontSize: "1.8rem", paddingBottom: "25px" }}>
                     By {quiz.creator}
                 </h2>
-                <h2>Hover over the card to see answer</h2>
                 <Carousel
                     ref={node => (this.carousel = node)}
                     style={{

@@ -1,17 +1,8 @@
 import React from "react";
+import "./Footer.css";
 
 const FooterComponent = () => {
-    return (
-        <footer
-            style={{
-                textAlign: "center",
-                height: "50px",
-                maxWidth: "100vw"
-            }}
-        >
-            ©2020 QuizMe
-        </footer>
-    );
+    return <footer class="bg-dark">©2020 QuizMe</footer>;
 };
 
 export default FooterComponent;
