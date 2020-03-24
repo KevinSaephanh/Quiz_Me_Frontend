@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { login } from "../../store/actions/authActions";
 import PropTypes from "prop-types";
 import "./Auth.css";
@@ -13,6 +13,8 @@ const LoginModal = props => {
     const [errors, setErrors] = useState([]);
     const { username, password } = inputs;
 
+    const dispatch = useDispatch();
+
     const handleChange = e => {
         const { name, value } = e.target;
         setInputs(inputs => ({ ...inputs, [name]: value }));
@@ -20,6 +22,10 @@ const LoginModal = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        if (username && password) {
+            dispatch(login(username, password));
+        }
     };
 
     return (

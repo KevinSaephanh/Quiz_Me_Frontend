@@ -6,7 +6,7 @@ import "./Home.css";
 
 const Home = () => {
     return (
-        <div class="home">
+        <div className="home">
             <Row>
                 <Col>
                     <ul>

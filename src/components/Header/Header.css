@@ -26,3 +26,13 @@
     border-color: skyblue !important;
     transition: 0.3s all ease-in;
 }
+
+@media only screen and (max-width: 600px) {
+    .navbar form {
+        margin-top: 10px;
+    }
+
+    .navbar button {
+        margin: 15px 0 5px 0;
+    }
+}

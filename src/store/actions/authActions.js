@@ -7,7 +7,7 @@ import {
     LOAD_USER,
     AUTH_ERROR
 } from "./types";
-import setAuthToken from "../../utils/AuthToken";
+import setAuthToken from "../../utils/AuthTokenUtils";
 
 export const register = user => async dispatch => {
     try {
@@ -29,7 +29,7 @@ export const login = user => async dispatch => {
     try {
         const res = await axios.post("/api/token-auth/", user);
 
-        // Create and set token in header and localStorage
+        // Create and set token in header and local storage
         const { token } = res.data;
         localStorage.setItem("token", token);
         setAuthToken(token);
@@ -50,6 +50,8 @@ export const login = user => async dispatch => {
 
 export const loadUser = () => async dispatch => {
     try {
+        console.log("NO!");
+
         const token = JSON.parse(localStorage.token);
 
         // Reset auth state if local storage does not contain user
@@ -62,6 +64,9 @@ export const loadUser = () => async dispatch => {
             const decoded = jwtDecode(token);
             const expirationDate = new Date(decoded.exp);
             if (expirationDate <= new Date()) {
+                // Remove token from local storage
+                localStorage.removeItem("token");
+
                 return dispatch({
                     type: LOGOUT
                 });

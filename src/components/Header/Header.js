@@ -28,7 +28,7 @@ const Header = props => {
                 <Navbar.Brand href="/">QuizMe</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    {props.isAuthenticated === true ? (
+                    {props.user === true ? (
                         <Nav className="mr-auto">
                             <Nav.Link href="/create">Create</Nav.Link>
                             <Nav.Link href="/">Profile</Nav.Link>

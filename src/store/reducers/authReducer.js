@@ -22,9 +22,6 @@ export default (state = initState, action) => {
                 errors: null
             };
         case LOGIN_SUCCESS:
-            // Set in auth in local storage
-            localStorage.setItem("auth", JSON.stringify(action.payload));
-
             return {
                 ...state,
                 isAuthenticated: true,
@@ -32,9 +29,6 @@ export default (state = initState, action) => {
                 errors: null
             };
         case AUTH_ERROR:
-            // Remove auth from local storage
-            localStorage.removeItem("auth");
-
             return {
                 ...state,
                 isAuthenticated: false,
@@ -42,9 +36,6 @@ export default (state = initState, action) => {
                 errors: action.payload
             };
         case LOGOUT:
-            // Remove auth from local storage
-            localStorage.removeItem("auth");
-
             return {
                 ...state,
                 isAuthenticated: false,
