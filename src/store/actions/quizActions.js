@@ -8,37 +8,37 @@ import {
     QUIZ_ERROR
 } from "./types";
 
-export const getQuizzes = page => async dispatch => {
+export const getQuizzes = async page => {
     try {
         const res = await axios.get(`/api/quizzes/page=${page}/`);
-        return dispatch({
+        return {
             type: GET_QUIZZES,
             payload: res.data
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: QUIZ_ERROR,
             payload: err
-        });
+        };
     }
 };
 
-export const getQuiz = id => async dispatch => {
+export const getQuiz = async id => {
     try {
         const res = await axios.get(`/api/quizzes/${id}/`);
-        return dispatch({
+        return {
             type: GET_QUIZ,
             payload: res.data
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: QUIZ_ERROR,
             payload: err
-        });
+        };
     }
 };
 
-export const createQuiz = (quiz, token) => async dispatch => {
+export const createQuiz = async (quiz, token) => {
     try {
         // Set token header and make post request
         const headers = {
@@ -48,46 +48,44 @@ export const createQuiz = (quiz, token) => async dispatch => {
         axios.defaults.headers = headers;
         const res = await axios.post("/api/quizzes/create/", quiz);
 
-        return dispatch({
+        return {
             type: CREATE_QUIZ,
             payload: res.data
-        });
+        };
     } catch (err) {
-        console.log(err.response);
-        console.log(err.response.data);
-        return dispatch({
+        return {
             type: QUIZ_ERROR,
             payload: err
-        });
+        };
     }
 };
 
-export const updateQuiz = quiz => async dispatch => {
+export const updateQuiz = async quiz => {
     try {
         const res = await axios.post(`/api/quizzes/modify/${quiz.id}/`, quiz);
-        return dispatch({
+        return {
             type: UPDATE_QUIZ,
             payload: res.data
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: QUIZ_ERROR,
             payload: err
-        });
+        };
     }
 };
 
-export const deleteQuiz = id => async dispatch => {
+export const deleteQuiz = async id => {
     try {
         await axios.delete(`/api/quizzes/modify/${id}/`);
-        return dispatch({
+        return {
             type: DELETE_QUIZ,
             payload: id
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: QUIZ_ERROR,
             payload: err
-        });
+        };
     }
 };

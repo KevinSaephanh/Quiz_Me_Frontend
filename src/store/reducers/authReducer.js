@@ -18,36 +18,36 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 isAuthenticated: false,
-                user: null,
-                errors: null
+                user: {},
+                errors: {}
             };
         case LOGIN_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload,
-                errors: null
+                errors: {}
             };
         case AUTH_ERROR:
             return {
                 ...state,
                 isAuthenticated: false,
-                user: null,
+                user: {},
                 errors: action.payload
             };
         case LOGOUT:
             return {
                 ...state,
                 isAuthenticated: false,
-                user: null,
-                errors: null
+                user: {},
+                errors: {}
             };
         case LOAD_USER:
             return {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload,
-                errors: null
+                errors: {}
             };
         default:
             return state;

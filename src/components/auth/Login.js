@@ -20,11 +20,12 @@ const LoginModal = props => {
         setInputs(inputs => ({ ...inputs, [name]: value }));
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
         if (username && password) {
-            dispatch(login(username, password));
+            const user = { username, password };
+            dispatch(await login(user));
         }
     };
 
@@ -42,7 +43,7 @@ const LoginModal = props => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control

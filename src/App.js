@@ -9,16 +9,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const App = () => {
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         async function getUser() {
-            dispatch(loadUser);
+            dispatch(await loadUser());
         }
-
         getUser();
+        console.log(user);
     }, []);
 
     return (

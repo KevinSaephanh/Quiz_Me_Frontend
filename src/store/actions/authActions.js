@@ -9,23 +9,23 @@ import {
 } from "./types";
 import setAuthToken from "../../utils/AuthTokenUtils";
 
-export const register = user => async dispatch => {
+export const register = async user => {
     try {
         const res = await axios.post("/api/rest-auth/register/", user);
 
-        return dispatch({
+        return {
             type: REGISTER_SUCCESS,
             payload: res.data
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: AUTH_ERROR,
             payload: err.response.data
-        });
+        };
     }
 };
 
-export const login = user => async dispatch => {
+export const login = async user => {
     try {
         const res = await axios.post("/api/token-auth/", user);
 
@@ -36,29 +36,25 @@ export const login = user => async dispatch => {
 
         // Decode token to get user data
         const decoded = jwtDecode(token);
-        dispatch({
+        return {
             type: LOGIN_SUCCESS,
             payload: decoded
-        });
+        };
     } catch (err) {
-        return dispatch({
+        return {
             type: AUTH_ERROR,
             payload: { msg: "Incorrect username/password" }
-        });
+        };
     }
 };
 
-export const loadUser = () => async dispatch => {
+export const loadUser = () => {
     try {
-        console.log("NO!");
-
         const token = JSON.parse(localStorage.token);
 
         // Reset auth state if local storage does not contain user
         if (!token) {
-            return dispatch({
-                type: LOGOUT
-            });
+            return { type: LOGOUT };
         } else {
             // Check if token expired
             const decoded = jwtDecode(token);
@@ -67,31 +63,27 @@ export const loadUser = () => async dispatch => {
                 // Remove token from local storage
                 localStorage.removeItem("token");
 
-                return dispatch({
-                    type: LOGOUT
-                });
+                return { type: LOGOUT };
             } else {
                 // Set state with user data
-                return dispatch({
+                return {
                     type: LOAD_USER,
                     payload: decoded
-                });
+                };
             }
         }
     } catch (err) {
-        return dispatch({
+        return {
             type: AUTH_ERROR,
             payload: err
-        });
+        };
     }
 };
 
-export const logout = () => dispatch => {
+export const logout = () => {
     // Remove token from localStorage and header
     localStorage.removeItem("token");
     setAuthToken(false);
 
-    return dispatch({
-        type: LOGOUT
-    });
+    return { type: LOGOUT };
 };

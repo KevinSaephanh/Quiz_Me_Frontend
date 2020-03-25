@@ -8,7 +8,7 @@ import CreateQuiz from "./containers/CreateQuiz";
 import QuizDetail from "./containers/QuizDetail";
 import ErrorPage from "./containers/ErrorPage";
 
-const Routes = () => (
+const Routes = props => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/login" component={Login} />

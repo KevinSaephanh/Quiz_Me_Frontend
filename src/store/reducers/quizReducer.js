@@ -10,7 +10,7 @@ import {
 const initState = {
     quizzes: [],
     quiz: {},
-    errors: ""
+    errors: []
 };
 
 export default (state = initState, action) => {
