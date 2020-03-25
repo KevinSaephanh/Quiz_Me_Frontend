@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { connect, useDispatch } from "react-redux";
 import { login } from "../../store/actions/authActions";
-import PropTypes from "prop-types";
 import "./Auth.css";
 
 const LoginModal = props => {
@@ -26,6 +26,8 @@ const LoginModal = props => {
         if (username && password) {
             const user = { username, password };
             dispatch(await login(user));
+
+            if (props.user && props.user.isAuthenticated) console.log("GOOD");
         }
     };
 
@@ -74,15 +76,4 @@ const LoginModal = props => {
     );
 };
 
-LoginModal.propTypes = {
-    login: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => {
-    return {
-        user: state.auth
-    };
-};
-
-export default connect(mapStateToProps, { login })(LoginModal);
+export default LoginModal;

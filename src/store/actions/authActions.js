@@ -33,6 +33,7 @@ export const login = async user => {
         const { token } = res.data;
         localStorage.setItem("token", token);
         setAuthToken(token);
+        console.log(token);
 
         // Decode token to get user data
         const decoded = jwtDecode(token);
@@ -50,33 +51,24 @@ export const login = async user => {
 
 export const loadUser = () => {
     try {
-        const token = JSON.parse(localStorage.token);
+        const token = localStorage.token;
+        console.log(token);
 
-        // Reset auth state if local storage does not contain user
-        if (!token) {
-            return { type: LOGOUT };
-        } else {
-            // Check if token expired
-            const decoded = jwtDecode(token);
-            const expirationDate = new Date(decoded.exp);
-            if (expirationDate <= new Date()) {
-                // Remove token from local storage
-                localStorage.removeItem("token");
-
-                return { type: LOGOUT };
-            } else {
-                // Set state with user data
-                return {
-                    type: LOAD_USER,
-                    payload: decoded
-                };
-            }
+        // Check if token expired
+        let decoded = jwtDecode(token);
+        const currentTime = new Date().getTime() / 1000;
+        if (decoded.exp <= currentTime) {
+            decoded = refreshToken(token);
         }
-    } catch (err) {
+
+        // Set state with decoded token
         return {
-            type: AUTH_ERROR,
-            payload: err
+            type: LOAD_USER,
+            payload: decoded
         };
+    } catch (err) {
+        // No token found
+        return { type: LOGOUT };
     }
 };
 
@@ -86,4 +78,19 @@ export const logout = () => {
     setAuthToken(false);
 
     return { type: LOGOUT };
+};
+
+const refreshToken = async token => {
+    // Remove token from local storage
+    localStorage.removeItem("token");
+
+    const res = await axios.post("/api/token-refresh/", token);
+
+    // Set new token in local storage and header
+    const newToken = res.data.token;
+    localStorage.setItem("token", newToken);
+    setAuthToken(newToken);
+
+    // Decode token and return
+    return jwtDecode(token);
 };

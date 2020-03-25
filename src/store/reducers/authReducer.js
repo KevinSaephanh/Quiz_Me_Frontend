@@ -22,6 +22,7 @@ export default (state = initState, action) => {
                 errors: {}
             };
         case LOGIN_SUCCESS:
+            console.log("GOOD");
             return {
                 ...state,
                 isAuthenticated: true,
@@ -36,6 +37,7 @@ export default (state = initState, action) => {
                 errors: action.payload
             };
         case LOGOUT:
+            console.log("GOODER");
             return {
                 ...state,
                 isAuthenticated: false,
@@ -43,6 +45,7 @@ export default (state = initState, action) => {
                 errors: {}
             };
         case LOAD_USER:
+            console.log("GOODEST");
             return {
                 ...state,
                 isAuthenticated: true,

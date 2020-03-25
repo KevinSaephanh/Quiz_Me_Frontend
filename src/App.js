@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "./store/actions/authActions";
@@ -22,13 +23,15 @@ const App = () => {
     }, []);
 
     return (
-        <Container fluid>
-            <Header user={user} />
-            <div id="content">
-                <Routes user={user} />
-            </div>
-            <Footer />
-        </Container>
+        <BrowserRouter>
+            <Container fluid>
+                <Header user={user} />
+                <div id="content">
+                    <Routes user={user} />
+                </div>
+                <Footer />
+            </Container>
+        </BrowserRouter>
     );
 };
 

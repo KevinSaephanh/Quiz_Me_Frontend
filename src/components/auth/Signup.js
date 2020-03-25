@@ -22,7 +22,7 @@ const SignupModal = props => {
         setInputs(inputs => ({ ...inputs, [name]: value }));
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
         if (
@@ -32,7 +32,7 @@ const SignupModal = props => {
             confirmPassword &&
             confirmPassword !== password
         ) {
-            dispatch(register(inputs));
+            dispatch(await register(inputs));
         }
     };
 

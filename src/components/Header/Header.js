@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 import LoginModal from "../auth/Login";
 import SignupModal from "../auth/Signup";
-import PropTypes from "prop-types";
 import "./Header.css";
 
 const Header = props => {
@@ -19,7 +17,7 @@ const Header = props => {
 
     const logoutUser = () => {
         logout();
-        props.history.push("/");
+        window.location.href = "/";
     };
 
     return (
@@ -28,7 +26,7 @@ const Header = props => {
                 <Navbar.Brand href="/">QuizMe</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    {props.user === true ? (
+                    {props.user.isAuthenticated === true ? (
                         <Nav className="mr-auto">
                             <Nav.Link href="/create">Create</Nav.Link>
                             <Nav.Link href="/">Profile</Nav.Link>
@@ -68,8 +66,4 @@ const Header = props => {
     );
 };
 
-Header.propTypes = {
-    logout: PropTypes.func.isRequired
-};
-
-export default connect(null, { logout })(Header);
+export default Header;
