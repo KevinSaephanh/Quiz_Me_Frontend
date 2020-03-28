@@ -21,13 +21,13 @@ const LoginModal = props => {
     };
 
     const handleSubmit = async e => {
-        e.preventDefault();
-
+        // Check for filled inputs
         if (username && password) {
             const user = { username, password };
             dispatch(await login(user));
 
-            if (props.user && props.user.isAuthenticated) console.log("GOOD");
+            // Check if login was successful
+            if (localStorage.token) props.close();
         }
     };
 

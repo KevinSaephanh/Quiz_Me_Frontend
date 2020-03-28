@@ -15,21 +15,31 @@ const Header = props => {
     const handleCloseSignup = () => setShowSignup(false);
     const handleShowSignup = () => setShowSignup(true);
 
+    const { user } = props;
+    const { username } = user.user;
+
     const logoutUser = () => {
         logout();
         window.location.href = "/";
     };
 
+    const renderBrand = () => {
+        if (user.isAuthenticated) return `Hello, ${username}`;
+        else return "QuizMe";
+    };
+
     return (
         <div>
             <Navbar expand="lg" bg="dark">
-                <Navbar.Brand href="/">QuizMe</Navbar.Brand>
+                <Navbar.Brand href="/">{renderBrand()}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    {props.user.isAuthenticated === true ? (
+                    {user.isAuthenticated === true ? (
                         <Nav className="mr-auto">
                             <Nav.Link href="/create">Create</Nav.Link>
-                            <Nav.Link href="/">Profile</Nav.Link>
+                            <Nav.Link href={"/profile/" + username}>
+                                Profile
+                            </Nav.Link>
                             <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
                         </Nav>
                     ) : (

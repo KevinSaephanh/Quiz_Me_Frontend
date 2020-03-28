@@ -23,16 +23,23 @@ const SignupModal = props => {
     };
 
     const handleSubmit = async e => {
-        e.preventDefault();
-
         if (
             username &&
             email &&
             password &&
             confirmPassword &&
-            confirmPassword !== password
+            confirmPassword === password
         ) {
-            dispatch(await register(inputs));
+            const password1 = password;
+            const password2 = confirmPassword;
+            const user = {
+                username,
+                email,
+                password1,
+                password2
+            };
+            dispatch(await register(user));
+            props.close();
         }
     };
 

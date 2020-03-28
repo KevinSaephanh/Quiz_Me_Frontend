@@ -18,9 +18,10 @@ export const register = async user => {
             payload: res.data
         };
     } catch (err) {
+        console.log(err);
         return {
             type: AUTH_ERROR,
-            payload: err.response.data
+            payload: err
         };
     }
 };
@@ -33,7 +34,6 @@ export const login = async user => {
         const { token } = res.data;
         localStorage.setItem("token", token);
         setAuthToken(token);
-        console.log(token);
 
         // Decode token to get user data
         const decoded = jwtDecode(token);
@@ -44,7 +44,7 @@ export const login = async user => {
     } catch (err) {
         return {
             type: AUTH_ERROR,
-            payload: { msg: "Incorrect username/password" }
+            payload: err
         };
     }
 };
@@ -52,13 +52,14 @@ export const login = async user => {
 export const loadUser = () => {
     try {
         const token = localStorage.token;
-        console.log(token);
 
         // Check if token expired
         let decoded = jwtDecode(token);
         const currentTime = new Date().getTime() / 1000;
         if (decoded.exp <= currentTime) {
-            decoded = refreshToken(token);
+            (async () => {
+                decoded = await refreshToken(token);
+            })();
         }
 
         // Set state with decoded token

@@ -15,11 +15,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getUser() {
-            dispatch(await loadUser());
-        }
-        getUser();
-        console.log(user);
+        dispatch(loadUser());
     }, []);
 
     return (
