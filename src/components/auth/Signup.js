@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Alert, Modal } from "react-bootstrap";
+import {
+    Form,
+    Button,
+    Alert,
+    Tooltip,
+    OverlayTrigger,
+    Modal
+} from "react-bootstrap";
 import { connect, useDispatch } from "react-redux";
 import { register } from "../../store/actions/authActions";
 import PropTypes from "prop-types";
@@ -39,8 +46,36 @@ const SignupModal = props => {
                 password2
             };
             dispatch(await register(user));
-            props.close();
+            // props.close();
         }
+    };
+
+    const renderTooltip = (props, field) => {
+        // Create message for tooltip
+        let message;
+        switch (field) {
+            case "username":
+                message = "Must be at least 3 characters and alphanumeric";
+                break;
+            case "email":
+                message = "Cannot exceed 50 characters";
+                break;
+            case "password":
+                message =
+                    "Must be at least 7 characters, contain one uppercase letter and one number";
+                break;
+            case "confirmPassword":
+                message = "Passwords must match!";
+                break;
+            default:
+                break;
+        }
+
+        return (
+            <Tooltip id="button-tooltip" {...props}>
+                <strong>{message}</strong>
+            </Tooltip>
+        );
     };
 
     return (
@@ -60,43 +95,67 @@ const SignupModal = props => {
                 <Form>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="username"
-                            value={username}
-                            onChange={handleChange}
-                            placeholder="Enter username"
-                        />
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 150, hide: 400 }}
+                            overlay={renderTooltip({}, "username")}
+                        >
+                            <Form.Control
+                                type="text"
+                                name="username"
+                                value={username}
+                                onChange={handleChange}
+                                placeholder="Enter username"
+                            />
+                        </OverlayTrigger>
                     </Form.Group>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            value={email}
-                            onChange={handleChange}
-                            placeholder="Enter email"
-                        />
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 150, hide: 400 }}
+                            overlay={renderTooltip({}, "email")}
+                        >
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={email}
+                                onChange={handleChange}
+                                placeholder="Enter email"
+                            />
+                        </OverlayTrigger>
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formBasicPassword1">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={handleChange}
-                            placeholder="Enter password"
-                        />
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 150, hide: 400 }}
+                            overlay={renderTooltip({}, "password")}
+                        >
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={handleChange}
+                                placeholder="Enter password"
+                            />
+                        </OverlayTrigger>
                     </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formBasicPassword2">
                         <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={handleChange}
-                            placeholder="Enter password again"
-                        />
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 150, hide: 400 }}
+                            overlay={renderTooltip({}, "confirmPassword")}
+                        >
+                            <Form.Control
+                                type="password"
+                                name="confirmPassword"
+                                value={confirmPassword}
+                                onChange={handleChange}
+                                placeholder="Enter password again"
+                            />
+                        </OverlayTrigger>
                     </Form.Group>
                 </Form>
             </Modal.Body>

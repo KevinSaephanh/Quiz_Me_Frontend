@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
 import { Form, Button, Alert, Modal } from "react-bootstrap";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../store/actions/authActions";
 import "./Auth.css";
 
@@ -10,7 +9,7 @@ const LoginModal = props => {
         username: "",
         password: ""
     });
-    const [errors, setErrors] = useState([]);
+    const [error, setError] = useState(null);
     const { username, password } = inputs;
 
     const dispatch = useDispatch();
@@ -24,10 +23,11 @@ const LoginModal = props => {
         // Check for filled inputs
         if (username && password) {
             const user = { username, password };
-            dispatch(await login(user));
+            const auth = dispatch(await login(user));
 
-            // Check if login was successful
-            if (localStorage.token) props.close();
+            // Check if login was successful, else render error alert
+            if (auth.payload.username) props.close();
+            else setError(auth.payload);
         }
     };
 
@@ -46,6 +46,11 @@ const LoginModal = props => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
+                    {error !== null ? (
+                        <Alert variant="danger">{error.message}</Alert>
+                    ) : (
+                        <div></div>
+                    )}
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control

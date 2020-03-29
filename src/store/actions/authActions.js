@@ -44,7 +44,7 @@ export const login = async user => {
     } catch (err) {
         return {
             type: AUTH_ERROR,
-            payload: err
+            payload: { message: "Username and/or password is incorrect" }
         };
     }
 };

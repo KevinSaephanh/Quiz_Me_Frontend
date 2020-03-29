@@ -4,7 +4,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./containers/Home/Home";
-import Profile from "./containers/Profile/Profile";
+import Profile from "./containers/profile/Profile";
 import CreateQuiz from "./containers/CreateQuiz";
 import QuizDetail from "./containers/QuizDetail";
 import ErrorPage from "./containers/ErrorPage";
