@@ -48,9 +48,7 @@ const LoginModal = props => {
                 <Form onSubmit={handleSubmit}>
                     {error !== null ? (
                         <Alert variant="danger">{error.message}</Alert>
-                    ) : (
-                        <div></div>
-                    )}
+                    ) : null}
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
                         <Form.Control

@@ -19,7 +19,8 @@ const SignupModal = props => {
         password: "",
         confirmPassword: ""
     });
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState(null);
+    const [success, setSuccess] = useState("");
 
     const { username, email, password, confirmPassword } = inputs;
     const dispatch = useDispatch();
@@ -30,23 +31,33 @@ const SignupModal = props => {
     };
 
     const handleSubmit = async e => {
+        const password1 = password;
+        const password2 = confirmPassword;
+        const user = {
+            username,
+            email,
+            password1,
+            password2
+        };
+        const res = dispatch(await register(user));
         if (
-            username &&
-            email &&
-            password &&
-            confirmPassword &&
-            confirmPassword === password
+            res.payload.username ||
+            res.payload.email ||
+            res.payload.password1
         ) {
-            const password1 = password;
-            const password2 = confirmPassword;
-            const user = {
-                username,
-                email,
-                password1,
-                password2
-            };
-            dispatch(await register(user));
-            // props.close();
+            setErrors({
+                username: res.payload.username,
+                email: res.payload.email,
+                password: res.payload.password1
+            });
+        } else {
+            setSuccess(
+                "Registration successful! Check your email to validate your account!"
+            );
+            setTimeout(() => {
+                setSuccess("");
+                props.close();
+            }, 3000);
         }
     };
 
@@ -62,10 +73,10 @@ const SignupModal = props => {
                 break;
             case "password":
                 message =
-                    "Must be at least 7 characters, contain one uppercase letter and one number";
+                    "Must be at least 8 characters, contain one uppercase letter and one number";
                 break;
             case "confirmPassword":
-                message = "Passwords must match!";
+                message = "Passwords should match";
                 break;
             default:
                 break;
@@ -94,7 +105,13 @@ const SignupModal = props => {
             <Modal.Body>
                 <Form>
                     <Form.Group>
+                        {success !== "" ? (
+                            <Alert variant="success">{success}</Alert>
+                        ) : null}
                         <Form.Label>Username</Form.Label>
+                        {errors !== null && errors.username ? (
+                            <Alert variant="danger">{errors.username}</Alert>
+                        ) : null}
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 150, hide: 400 }}
@@ -111,6 +128,9 @@ const SignupModal = props => {
                     </Form.Group>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
+                        {errors !== null && errors.email ? (
+                            <Alert variant="danger">{errors.email}</Alert>
+                        ) : null}
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 150, hide: 400 }}
@@ -127,6 +147,9 @@ const SignupModal = props => {
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword1">
                         <Form.Label>Password</Form.Label>
+                        {errors !== null && errors.password ? (
+                            <Alert variant="danger">{errors.password}</Alert>
+                        ) : null}
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 150, hide: 400 }}

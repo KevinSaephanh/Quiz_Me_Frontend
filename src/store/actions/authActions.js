@@ -18,10 +18,9 @@ export const register = async user => {
             payload: res.data
         };
     } catch (err) {
-        console.log(err);
         return {
             type: AUTH_ERROR,
-            payload: err
+            payload: err.response.data
         };
     }
 };
