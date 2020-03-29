@@ -69,7 +69,7 @@ const SignupModal = props => {
                 message = "Must be at least 3 characters and alphanumeric";
                 break;
             case "email":
-                message = "Cannot exceed 50 characters";
+                message = "Cannot exceed 150 characters";
                 break;
             case "password":
                 message =
@@ -123,6 +123,8 @@ const SignupModal = props => {
                                 value={username}
                                 onChange={handleChange}
                                 placeholder="Enter username"
+                                maxLength="50"
+                                required
                             />
                         </OverlayTrigger>
                     </Form.Group>
@@ -142,6 +144,8 @@ const SignupModal = props => {
                                 value={email}
                                 onChange={handleChange}
                                 placeholder="Enter email"
+                                maxLength="250"
+                                required
                             />
                         </OverlayTrigger>
                     </Form.Group>
@@ -161,6 +165,8 @@ const SignupModal = props => {
                                 value={password}
                                 onChange={handleChange}
                                 placeholder="Enter password"
+                                maxLength="250"
+                                required
                             />
                         </OverlayTrigger>
                     </Form.Group>
@@ -177,6 +183,8 @@ const SignupModal = props => {
                                 value={confirmPassword}
                                 onChange={handleChange}
                                 placeholder="Enter password again"
+                                maxLength="250"
+                                required
                             />
                         </OverlayTrigger>
                     </Form.Group>

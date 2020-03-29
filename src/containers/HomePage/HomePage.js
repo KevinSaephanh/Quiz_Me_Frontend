@@ -2,9 +2,9 @@ import React from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import Coffee from "../../images/coffee.jpeg";
 import Notebook from "../../images/notebook.jpeg";
-import "./Home.css";
+import "./HomePage.css";
 
-const Home = () => {
+const HomePage = () => {
     return (
         <div className="home">
             <Row>
@@ -44,4 +44,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;

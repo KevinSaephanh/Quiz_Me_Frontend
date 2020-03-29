@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Carousel, Button, Row } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { getQuiz } from "../store/actions/quizActions";
+import { getQuiz } from "../../store/actions/quizActions";
 
-import QuestionList from "../components/QuestionList";
-import QuestionCard from "../components/QuestionCard";
+import QuestionList from "../../components/QuestionList";
+import QuestionCard from "../../components/QuestionCard";
 
 import PropTypes from "prop-types";
 

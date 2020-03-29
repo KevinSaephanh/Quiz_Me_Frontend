@@ -1,60 +1,70 @@
-import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
-class QuestionForm extends Component {
-    state = {
+const QuestionForm = props => {
+    const [inputs, setInputs] = useState({
         question: "",
         answer: ""
+    });
+
+    const { question, answer } = inputs;
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setInputs(inputs => ({ ...inputs, [name]: value }));
     };
 
-    onChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
-
-    onSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
 
-        const { question, answer } = this.state;
         const newQuestion = {
             question,
             answer
         };
 
         // Send question to parent component
-        this.props.addQuestion(newQuestion);
+        props.addQuestion(newQuestion);
     };
 
-    render() {
-        return (
-            <Form>
-                <Form.Item label="Question">
-                    <textarea
-                        placeholder="Input question"
-                        name="question"
-                        onChange={this.onChange}
-                        maxLength="300"
-                        required
-                    />
-                </Form.Item>
-                <Form.Item label="Answer">
-                    <textarea
-                        placeholder="Input answer"
-                        name="answer"
-                        onChange={this.onChange}
-                        maxLength="300"
-                        required
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" onClick={this.onSubmit}>
-                        Add
+    return (
+        <Form>
+            <Row>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Question</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            type="text"
+                            name="question"
+                            value={question}
+                            onChange={handleChange}
+                            maxLength="300"
+                            required
+                        />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Answer</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            type="text"
+                            name="answer"
+                            value={answer}
+                            onChange={handleChange}
+                            maxLength="300"
+                            required
+                        />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Button type="primary" onClick={handleSubmit}>
+                        Add (+)
                     </Button>
-                </Form.Item>
-            </Form>
-        );
-    }
-}
+                </Col>
+            </Row>
+        </Form>
+    );
+};
 
 export default QuestionForm;

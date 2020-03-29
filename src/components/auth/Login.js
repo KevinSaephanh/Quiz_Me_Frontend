@@ -57,6 +57,8 @@ const LoginModal = props => {
                             value={username}
                             onChange={handleChange}
                             placeholder="Enter username"
+                            maxLength="50"
+                            required
                         />
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
@@ -67,6 +69,8 @@ const LoginModal = props => {
                             value={password}
                             onChange={handleChange}
                             placeholder="Enter password"
+                            maxLength="250"
+                            required
                         />
                     </Form.Group>
                 </Form>
