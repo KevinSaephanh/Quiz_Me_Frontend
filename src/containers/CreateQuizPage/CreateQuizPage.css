@@ -1,0 +1,37 @@
+.create-quiz-page {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.create-quiz-page .row {
+    min-height: 150px;
+}
+
+.set-title-row label {
+    font-size: 25px;
+    font-weight: bolder;
+    padding-right: 15px;
+}
+
+.set-title-row input {
+    height: 40px;
+    width: 300px;
+    border-radius: 3px;
+    margin-right: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .create-quiz-page {
+        width: 90%;
+    }
+
+    .set-title-row label {
+        font-size: 22px;
+        padding-right: 10px;
+    }
+
+    .set-title-row input {
+        width: 200px;
+        margin-right: 5px;
+    }
+}

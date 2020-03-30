@@ -1,23 +1,28 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { createQuiz } from "../../store/actions/quizActions";
 import QuestionForm from "../../components/QuestionForm";
 import QuestionList from "../../components/QuestionList";
+import CategoryDropdown from "../../components/CategoryDropdown/CategoryDropdown";
 import { useDispatch } from "react-redux";
+import "./CreateQuizPage.css";
 
 const CreateQuizPage = props => {
     const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [questions, setQuestions] = useState([]);
 
     const dispatch = useDispatch();
 
-    const handleChange = e => {};
+    const handleChange = e => {
+        console.log(e.target.value);
+    };
 
     const addQuestion = question => {
         setQuestions(questions => [...questions, question]);
     };
 
-    const createQuiz = e => {
+    const saveQuiz = e => {
         e.preventDefault();
 
         const { user } = props.user;
@@ -27,21 +32,45 @@ const CreateQuizPage = props => {
             creator: user.username
         };
 
-        props.createQuiz(quiz, user.token);
+        props.saveQuiz(quiz, user.token);
         window.location.href = "/";
     };
 
     return (
-        <div>
-            <Row>
-                <Col span={12}>
-                    <h3>Create a Quiz</h3>
+        <div className="create-quiz-page">
+            <Row className="set-title-row">
+                <Col style={{ display: "flex" }}>
+                    <label>Title: </label>
+                    <input
+                        type="text"
+                        name="title"
+                        value={title}
+                        onChange={handleChange}
+                        maxLength="50"
+                        required
+                    />
+                </Col>
+                <Col>
+                    <CategoryDropdown category={""} />
                 </Col>
             </Row>
+            <Row className="set-title-row">
+                <label>Description: </label>
+                <textarea
+                    type="text"
+                    name="description"
+                    value={description}
+                    onChange={handleChange}
+                    maxLength="250"
+                    required
+                />
+            </Row>
+            <Row>
+                <QuestionForm addQuestion={addQuestion} />
+            </Row>
 
-            <QuestionForm addQuestion={addQuestion} />
             {/* <QuestionList questions={questions} /> */}
-            <Button onClick={createQuiz}>Create</Button>
+            <Button onClick={saveQuiz}>Save</Button>
         </div>
     );
 };
